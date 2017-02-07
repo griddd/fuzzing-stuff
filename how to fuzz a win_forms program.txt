@@ -1,0 +1,19 @@
+What I want to happen is fairly simple
+1. Read a text file (one line at a time) with my fuzz strings
+2. Put the fuzz string into a textbox on the target form
+3. Have the target form process my fuzz string (via clicking ok, submit, or whatever the action is)
+
+I can do this manually, but it would be very time-consuming with a large set of fuzz strings
+
+Possible solutions
+-------------------------------------
+1. For fuzzing Windows forms applications, check FuzzWinForms at https://github.com/SJMakin/FuzzWinForms
+
+2. Answered from my post at https://forums.peachfuzzer.com/forum/peach-community-edition/general-support/3624-fuzzing-a-windows-forms-program
+	If you can code, especially in c#, I would recommend writing a custom Publisher that will send your data to the form. 
+	Most windows programs can be spoken to using messaging. Visual studio comes with SPY++, a program dig through UI interfaces for the 
+	window name/ID. You can directly send data/keystrokes to an app from C#.
+
+	This MSDN article may also be helpful: https://msdn.microsoft.com/en-us/library/ms171548(v=vs.110).aspx	
+
+3. Use the AutoIt scripting tool at https://www.autoitscript.com/site/autoit/
