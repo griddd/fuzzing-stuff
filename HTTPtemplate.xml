@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Peach xmlns="http://peachfuzzer.com/2012/Peach" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://peachfuzzer.com/2012/Peach ../peach.xsd">	
+
+<!--
+
+Example pit template to fuzz a website.  Remove the mutable & token values on strings you want to fuzz
+You can build the DataModel by using BurpSuite (or any intercepting proxy) to intercept
+the HTTP request.  \r\n signifies a carriage return & line feed
+
+-->
+	<DataModel name="HttpRequest" >
+		<String value="GET /QC/" mutable="false" token="true"/>					
+		<String value=" HTTP/1.1" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="Host: " mutable="false" token="true"/>					
+		<String value="website.com" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="User-Agent: " mutable="false" token="true"/>					
+		<String name="User-Agent value" value="Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+		
+		<String value="Accept: " mutable="false" token="true"/>					
+		<String name="Accept value" value="text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="Accept-Language: " mutable="false" token="true" />					
+		<String name="Accept-Language value" value="en-US,en;q=0.5" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+		
+		<String value="Connection: " mutable="false" token="true"/>					
+		<String name="Connection value" value="close" mutable="false" token="true" />
+		<String value="\r\n\r\n" mutable="false" token="true"/>
+
+		<!-- Other headers, fuzz the ones you want -->
+		<!--
+
+		<String value="Accept-Charset: " mutable="false" token="true"/>					
+		<String name="Accept-Charset value" value="utf-8" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="Accept-Datetime: " mutable="false" token="true"/>					
+		<String name="Accept-Datetime value" value="Thu, 31 May 2007 20:35:00 GMT" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="Authorization: " mutable="false" token="true"/>					
+		<String name="Authorization value" value="Basic QWxhZGRpbjpvcGVuIHN1c2FtZq==" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="Cache-Control: " mutable="false" token="true"/>					
+		<String name="Cache-Control value" value="no-cache" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="Cookie: " mutable="false" token="true"/>					
+		<String name="Cookie value" value="$Version=1; Skin=new" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="Content-Length: " mutable="false" token="true"/>					
+		<String name="Content-Length value" value="356" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="Content-MD5: " mutable="false" token="true"/>					
+		<String name="Content-MD5 value" value="d273d63619c9aeaf15cdaf76422c4f87" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="Content-Type: " mutable="false" token="true"/>					
+		<String name="Content-Type value" value="application/x-www-form-urlencoded" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="Content-Disposition: " mutable="false" token="true"/>					
+		<String name="Content-Disposition Value value" value="attachment; filename=fname.ext; thicket=1" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="Date: " mutable="false" token="true"/>					
+		<String name="Date value" value="Tue, 15 Nov 2013 08:15:31 GMT" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="Expect: " mutable="false" token="true"/>					
+		<String name="Expect value" value="100-continue" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="Forwarded: " mutable="false" token="true"/>					
+		<String name="Forwarded value" value="for=192.168.22.55; proto=http;by=192.168.22.170" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="From: " mutable="false" token="true"/>					
+		<String name="From value" value="test@website.com" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="If-Match: " mutable="false" token="true"/>					
+		<String name="If-Match value" value="d273d63619c985dk3945k15cdaf76422c4f87" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="If-Modified-Since: " mutable="false" token="true"/>					
+		<String name="If-Modified-Since value" value="Tue, 15 Nov 2013 08:15:31 GMT" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+		
+		<String value="If-None-Match: " mutable="false" token="true"/>					
+		<String name="If-None-Match value" value="d273d63619c985dk3945k15cdaf76422c4f87" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="If-Range: " mutable="false" token="true"/>					
+		<String name="If-Range value" value="845kf934hghk362jdf845j38fj5fklj97dd445" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="If-Unmodified-Since: " mutable="false" token="true"/>					
+		<String name="If-Unmodified-Since value" value="Tue, 15 Nov 2013 08:15:31 GMT" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="Max-Forwards: " mutable="false" token="true"/>					
+		<String name="Max-Forwards value" value="6" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="Origin: " mutable="false" token="true"/>					
+		<String name="Origin value" value="http://website.com" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="Pragma: " mutable="false" token="true"/>					
+		<String name="Pragma value" value="no-cache" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="Proxy-Authorization: " mutable="false" token="true"/>					
+		<String name="Proxy-Authorization value" value="Basic 47b573e3824cd5e02a1a3ae99e2735b49e0256e4==" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="Range: " mutable="false" token="true"/>					
+		<String name="Range value" value="bytes=500-999" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="Referer: " mutable="false" token="true"/>					
+		<String name="Referer value" value="http://en.wikipedia.org/wiki/Main_Page" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="TE: " mutable="false" token="true"/>					
+		<String name="TE value" value="trailers, deflate" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="Upgrade: " mutable="false" token="true"/>					
+		<String name="Upgrade value" value="HTTP/2.0, SHTTP/1.3, IRC/6.9" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="Via: " mutable="false" token="true"/>					
+		<String name="Via value" value="1.5 Proxifier, 2.4 example.com (Apache/1.1)" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="Warning: " mutable="false" token="true"/>					
+		<String name="Warning value" value="199 Miscellaneous warning" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="X-Requested-With: " mutable="false" token="true"/>					
+		<String name="X-Requested-With value" value="XMLHttpRequest" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="DNT: " mutable="false" token="true"/>					
+		<String name="DNT value" value="1 (Do Not Track Enabled)" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="X-Forwarded-For: " mutable="false" token="true"/>					
+		<String name="X-Forwarded-For value" value="client1, proxy1" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="X-Forwarded-Host: " mutable="false" token="true"/>					
+		<String name="X-Forwarded-Host value" value="en.wikipedia.org:80" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="X-Forwarded-Proto: " mutable="false" token="true"/>					
+		<String name="X-Forwarded-Proto value" value="https" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="Front-End-Https: " mutable="false" token="true"/>					
+		<String name="Front-End-Https value" value="on" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="X-HTTP-Method-Override: " mutable="false" token="true"/>					
+		<String name="X-HTTP-Method-Override value" value="DELETE" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="X-Att-Deviceid: " mutable="false" token="true"/>					
+		<String name="X-Att-Deviceid value" value="GT-P7320/P7320XXLPG" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="X-Wap-Profile: " mutable="false" token="true"/>					
+		<String name="X-Wap-Profile value" value="http://wap.samsungmobile.com/uaprof/SGH-I777.xml" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="Proxy-Connection: " mutable="false" token="true"/>					
+		<String name="Proxy-Connection value" value="keep-alive" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="X-UIDH: " mutable="false" token="true"/>					
+		<String name="X-UIDH value" value="47b573e3824cd5e02a1a3ae99e2735b49e0256e4" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="X-Csrf-Token: " mutable="false" token="true"/>					
+		<String name="X-Csrf-Token value" value="47b573e3824cd5e02a1a3ae99e2735b49e0256e4" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="XCSRFToken: " mutable="false" token="true"/>					
+		<String name="XCSRFToken value" value="47b573e3824cd5e02a1a3ae99e2735b49e0256e4" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="X-XSRF-TOKEN: " mutable="false" token="true"/>					
+		<String name="X-XSRF-TOKEN value" value="47b573e3824cd5e02a1a3ae99e2735b49e0256e4" />
+		<String value="\r\n" mutable="false" token="true"/>
+
+
+		Headers specific to SharePoint; might or might not be in use by the target system
+
+
+		<String value="x-virus-infected: " mutable="false" token="true"/>					
+		<String name="x-virus-infected value" value="1" />
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="x-irm-cantdecrypt: " mutable="false" token="true"/>					
+		<String name="x-irm-cantdecrypt value" value="1" />
+		<String value="\r\n" mutable="false" token="true"/>
+		
+		<String value="x-irm-rejected: " mutable="false" token="true"/>					
+		<String name="x-irm-rejected value" value="1" />
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="x-irm-notowner: " mutable="false" token="true"/>					
+		<String name="x-irm-notowner value" value="1" />
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="x-irm-timeout: " mutable="false" token="true"/>					
+		<String name="x-irm-timeout value" value="1" />
+		<String value="\r\n" mutable="false" token="true"/>
+			
+		<String value="x-irm-crashed: " mutable="false" token="true"/>					
+		<String name="x-irm-crashed value" value="1" />
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="x-irm-unknown-failure: " mutable="false" token="true"/>					
+		<String name="x-irm-unknown-failure value" value="1" />
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="SharePointError: " mutable="false" token="true"/>					
+		<String name="SharePointError value" value="0" />
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="X-RequestDigest: " mutable="false" token="true"/>					
+		<String name="X-RequestDigest value" value="7ec1f0eb9119d48eb6a3176ca47380c6496304c8" />
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="X-Forms_Based_Auth_Required: " mutable="false" token="true"/>					
+		<String name="X-Forms_Based_Auth_Required value" value="some URL" />
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="X-Forms_Based_Auth_Return_Url: " mutable="false" token="true"/>					
+		<String name="X-Forms_Based_Auth_Return_Url value" value="some URL" />
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="X-MS-File-Checked-Out: " mutable="false" token="true"/>					
+		<String name="X-MS-File-Checked-Out value" value="1" />
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="X-RequestToken: " mutable="false" token="true"/>					
+		<String name="X-RequestToken value" value="1" />
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="SPRequestGuid: " mutable="false" token="true"/>					
+		<String name="SPRequestGuid value" value="0bc4573f-5520-4a76-98db-33401b09e7a1" />
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="X-UseWebLanguage: " mutable="false" token="true"/>					
+		<String name="X-UseWebLanguage value" value="true" />
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="X-RequestForceAuthentication: " mutable="false" token="true"/>					
+		<String name="X-RequestForceAuthentication value" value="true" />
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="X-SharePointHealthScore: " mutable="false" token="true"/>					
+		<String name="X-SharePointHealthScore value" value="10" />
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="X-MS-InvokeApp: " mutable="false" token="true"/>					
+		<String name="X-MS-InvokeApp value" value="1; RequireReadOnly" />
+		<String value="\r\n" mutable="false" token="true"/>
+
+		
+		END...Headers specific to SharePoint; might or might not be in use by the target system
+
+
+		-->
+
+	</DataModel>
+
+
+	<DataModel name="HttpResponse">
+		<!-- the webserver's reply, we don't care what it is -->
+		<!-- we define the type as blob, and value as hex, in case the webserver replies with non-ASCII stuff -->
+		<Blob name="WhoCares" valueType="hex" />
+	</DataModel>
+
+	
+	<StateModel name="TheStateModel" initialState="TheState">
+		<State name="TheState">
+			<Action type="output">
+				<DataModel ref="HttpRequest" />
+			</Action>
+			
+			<Action type="input">
+				<DataModel ref="HttpResponse" />
+			</Action>
+		</State>
+	</StateModel>
+
+
+        <Agent name="WinAgent">
+	     <!-- If we have a crash, put a packet capture in the logs -->
+
+	     <Monitor name="Network" class="Pcap">
+		<Param name="Device" value="Local Area Connection" />
+		<Param name="filter" value="tcp"/>
+	     </Monitor>    					    	
+        </Agent>
+
+	
+	<Test name="Default">
+		<Agent ref="WinAgent" />
+		<StateModel ref="TheStateModel"/>
+
+		<!-- the webserver & port to which we connect -->
+		<!-- We use the TcpClient publisher for more fine-grained control over the HTTP request -->		
+		
+		<Publisher class="TcpClient">
+			<Param name="Host" value="192.168.88.23" />
+			<Param name="Port" value="80" />
+		</Publisher>
+		
+		<!-- create a logs directory; will be in the same directory where we run peach -->
+		
+		<Logger class="Filesystem">
+			<Param name="Path" value="logs" />
+		</Logger>
+
+		<!-- we run a finite number of test cases -->
+
+		<Strategy class="Sequential"/>	
+	</Test>
+
+</Peach>
