@@ -1,0 +1,254 @@
+// Spike fuzzer template script
+// Run by using /usr/bin/generic_send_tcp <target IP> 80 template.spk 0 0
+
+// I built this by using BurpSuite to intercept the HTTP get
+// We could fuzz any/all of these fields.
+// Just connects to the website and gets the main page
+
+// s_string denotes constants.  \r\n signifies a carriage return and line feed
+
+// s_string_variable denotes our fuzz target.  On the first iteration, it will have the value specified here.
+// Subsequent iterations will have fuzz values inserted by Spike.  Do a packet capture while runnning this script to see the fuzz 
+// values used by Spike.
+
+// Note that not all of these HTTP headers may be used/accepted by the target webserver or web application. 
+// Can change the first few lines to fuzz other HTTP methods (e.g. head, put, delete, etc).  
+
+// Refer to http://www.tutorialspoint.com/http/http_methods.htm for a list of HTTP headers, and their layout.  
+// This does not include track, but track seems to work like trace. 
+
+// Grid
+
+s_string("GET /QC/ HTTP/1.1");
+s_string("\r\n"); 
+s_string("Host: website.com");
+s_string("\r\n");
+s_string("User-Agent: ");
+s_string("Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0 Iceweasel/31.8.0");
+s_string("\r\n");
+s_string("Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
+s_string("\r\n");
+s_string("Accept-Language: en-US,en;q=0.5");
+s_string("\r\n");
+s_string("Accept-Encoding: gzip, deflate");
+s_string("\r\n");
+s_string("Connection: close");
+s_string("\r\n");
+
+// other HTTP headers, consider fuzzing them
+//s_string("Accept-Charset: ");
+//s_string_variable("utf-8");
+//s_string("\r\n");
+//s_string("Accept-Datetime: ");
+//s_string_variable("Thu, 31 May 2007 20:35:00 GMT");
+//s_string("\r\n");
+//s_string("Authorization: ");
+//s_string_variable("Basic QWxhZGRpbjpvcGVuIHN1c2FtZq==");
+//s_string("\r\n");
+//s_string("Cache-Control: ");
+//s_string_variable("no-cache");
+//s_string("\r\n");
+//s_string("Cookie: ");
+//s_string_variable("$Version=1; Skin=new");
+//s_string("\r\n");
+//s_string("Content-Length: ");
+//s_string_variable("356");
+//s_string("\r\n");
+//s_string("Content-MD5: ");
+//s_string_variable("d273d63619c9aeaf15cdaf76422c4f87");
+//s_string("\r\n");
+//s_string("Content-Type: ");
+//s_string_variable("application/x-www-form-urlencoded");
+//s_string("\r\n");
+//s_string("Date: ");
+//s_string_variable("Tue, 15 Nov 2013 08:15:31 GMT");
+//s_string("\r\n");
+//s_string("Expect: ");
+//s_string_variable("100-continue");
+//s_string("\r\n");
+//s_string("Forwarded: ");
+//s_string_variable("for=192.168.43.33; proto=http;by=192.168.43.125");
+//s_string("\r\n");
+//s_string("From: ");
+//s_string_variable("test@website.com");
+//s_string("\r\n");
+//s_string("If-Match: ");
+//s_string_variable("d273d63619c985dk3945k15cdaf76422c4f87");
+//s_string("\r\n");
+//s_string("If-Modified-Since: ");
+//s_string_variable("Sat, 5 Mar 2016 14:43:33 GMT");
+//s_string("\r\n");
+//s_string("If-None-Match: ");
+//s_string_variable("adjkf947gkk58fm0903kggkl33j5j");
+//s_string("\r\n");
+//s_string("If-Range: ");
+//s_string_variable("845kf934hghk362jdf845j38fj5fklj97dd445");
+//s_string("\r\n");
+//s_string("If-Unmodified-Since: ");
+//s_string_variable("Fri, 13 Nov 2015 06:35:04 GMT");
+//s_string("\r\n");
+//s_string("Max-Forwards: ");
+//s_string_variable("6");
+//s_string("\r\n");
+//s_string("Origin: ");
+//s_string_variable("http://www.website.com");
+//s_string("\r\n");
+//s_string("Pragma: ");
+//s_string_variable("no-cache");
+//s_string("\r\n");
+//s_string("Proxy-Authorization: ");
+//s_string_variable("Basic 47b573e3824cd5e02a1a3ae99e2735b49e0256e4==");
+//s_string("\r\n");
+//s_string("Range: ");
+//s_string_variable("bytes=500-999");
+//s_string("\r\n");
+//s_string("Referer: http://en.wikipedia.org/wiki/Main_Page");
+//s_string("\r\n");
+//s_string("TE: ");
+//s_string_variable("trailers, deflate");
+//s_string("\r\n");
+//s_string("Upgrade: ");
+//s_string_variable("HTTP/2.0, SHTTP/1.3, IRC/6.9");
+//s_string("\r\n");
+//s_string("Via: ");
+//s_string_variable("1.5 Proxifier, 2.4 example.com (Apache/1.1)");
+//s_string("\r\n");
+//s_string("Warning: ");
+//s_string_variable("199 Miscellaneous warning");
+//s_string("\r\n");
+//s_string("X-Requested-With: ");
+//s_string_variable("XMLHttpRequest");
+//s_string("\r\n");
+//s_string("DNT: ");
+//s_string_variable("1 (Do Not Track Enabled)");
+//s_string("\r\n");
+//s_string("X-Forwarded-For: ");
+//s_string_variable("client1, proxy1");
+//s_string("\r\n");
+//s_string("X-Forwarded-Host: ");
+//s_string_variable("en.wikipedia.org:80");
+//s_string("\r\n");
+//s_string("X-Forwarded-Proto: ");
+//s_string_variable("https");
+//s_string("\r\n");
+//s_string("Front-End-Https: ");
+//s_string_variable("on");
+//s_string("\r\n");
+//s_string("X-HTTP-Method-Override: ");
+//s_string_variable("DELETE");
+//s_string("\r\n");
+//s_string("X-Att-Deviceid: ");
+//s_string_variable("GT-P7320/P7320XXLPG");
+//s_string("\r\n");
+//s_string("X-Wap-Profile: ");
+//s_string_variable("http://wap.samsungmobile.com/uaprof/SGH-I777.xml");
+//s_string("\r\n");
+//s_string("Proxy-Connection: ");
+//s_string_variable("keep-alive");
+//s_string("\r\n");
+//s_string("X-UIDH: ");
+//s_string_variable("47b573e3824cd5e02a1a3ae99e2735b49e0256e4");
+//s_string("\r\n");
+//s_string("X-Csrf-Token: ");
+//s_string_variable("47b573e3824cd5e02a1a3ae99e2735b49e0256e4");
+//s_string("\r\n");
+//s_string("XCSRFToken: ");
+//s_string_variable("47b573e3824cd5e02a1a3ae99e2735b49e0256e4");
+//s_string("\r\n");
+//s_string("X-XSRF-TOKEN: ");
+//s_string_variable("47b573e3824cd5e02a1a3ae99e2735b49e0256e4");
+//s_string("\r\n");
+// END...other HTTP headers, consider fuzzing them
+
+// HTTP headers used in WebDAV, consider fuzzing them
+//s_string("Destination: ");
+//s_string_variable("http://website.com");
+//s_string("\r\n"); 
+//s_string("Depth: ");
+//s_string_variable("0");
+//s_string("\r\n"); 
+//s_string("Brief: ");
+//s_string_variable("t");
+//s_string("\r\n"); 
+//s_string("Overwrite: ");
+//s_string_variable("T");
+//s_string("\r\n"); 
+//s_string("Timeout: ");
+//s_string_variable("Infinite, Second-4100000000");
+//s_string("\r\n"); 
+//s_string("Location: ");
+//s_string_variable("http://website.com");
+//s_string("\r\n"); 
+//s_string("Subscription-id: ");
+//s_string_variable("15");
+//s_string("\r\n"); 
+//s_string("Translate: ");
+//s_string_variable("f");
+//s_string("\r\n"); 
+//s_string("Call-back: ");
+//s_string_variable("http://website.com");
+//s_string("\r\n"); 
+//s_string("Lock-Token: ");
+//s_string_variable("<opaquelocktoken:e71d4fae-5dec-22df-fea5-00a0c93bd5eb1>");
+//s_string("\r\n"); 
+// END...HTTP headers used in WebDAV, consider fuzzing them
+
+// HTTP headers specific to SharePoint; might or might not be in use by the target system...maybe fuzz these
+//s_string("x-virus-infected: ");
+//s_string_variable("1");
+//s_string("\r\n"); 
+//s_string("x-irm-cantdecrypt: ");
+//s_string_variable("1");
+//s_string("\r\n"); 
+//s_string("x-irm-rejected: ");
+//s_string_variable("1");
+//s_string("\r\n"); 
+//s_string("x-irm-notowner: ");
+//s_string_variable("1");
+//s_string("\r\n"); 
+//s_string("x-irm-timeout: ");
+//s_string_variable("1");
+//s_string("\r\n"); 
+//s_string("x-irm-crashed: ");
+//s_string_variable("1");
+//s_string("\r\n"); 
+//s_string("x-irm-unknown-failure: ");
+//s_string_variable("1");
+//s_string("\r\n"); 
+//s_string("SharePointError: ");
+//s_string_variable("0");
+//s_string("\r\n"); 
+//s_string("X-RequestDigest: ");
+//s_string_variable("7ec1f0eb9119d48eb6a3176ca47380c6496304c8");
+//s_string("\r\n"); 
+//s_string("X-Forms_Based_Auth_Required: ");
+//s_string_variable("some URL");
+//s_string("\r\n"); 
+//s_string("X-Forms_Based_Auth_Return_Url: ");
+//s_string_variable("some URL");
+//s_string("\r\n"); 
+//s_string("X-MS-File-Checked-Out: ");
+//s_string_variable("1");
+//s_string("\r\n"); 
+//s_string("X-RequestToken: ");
+//s_string_variable("1");
+//s_string("\r\n"); 
+//s_string("SPRequestGuid: ");
+//s_string_variable("0bc4573f-5520-4a76-98db-33401b09e7a1");
+//s_string("\r\n"); 
+//s_string("X-UseWebLanguage: ");
+//s_string_variable("true");
+//s_string("\r\n"); 
+//s_string("X-RequestForceAuthentication: ");
+//s_string_variable("true");
+//s_string("\r\n"); 
+//s_string("X-SharePointHealthScore: ");
+//s_string_variable("10");
+//s_string("\r\n"); 
+//s_string("X-MS-InvokeApp: ");
+//s_string_variable("1; RequireReadOnly");
+//s_string("\r\n"); 
+// END...HTTP headers specific to SharePoint; might or might not be in use by the target system...maybe fuzz these  
+
+
+s_string("\r\n\r\n");
