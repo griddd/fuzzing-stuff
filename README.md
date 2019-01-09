@@ -1,4 +1,6 @@
 # fuzzing-stuff
-a collection of notes and fuzz strings
+a collection of notes, fuzz strings, and fuzz templates
 
-Much of this stuff has been pulled from other sources, like the big list of naughty strings (credits to minimaxir).  I've edited many of these files to suit my specific needs
+Many of the fuzz strings have been pulled from other sources, like the big list of naughty strings (credits to minimaxir).  The fuzz string files have been edited to suit my specific needs
+
+The fuzz template files are for various fuzzers (DOONA, Peach, and Spike).  Most of my work is in the web application area.
