@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Peach xmlns="http://peachfuzzer.com/2012/Peach" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://peachfuzzer.com/2012/Peach ../peach.xsd">	
+
+<!--
+
+Example pit to fuzz a website.  Remove the mutable & token values on strings you want to fuzz
+You can build the DataModel by using BurpSuite (or any intercepting proxy) to intercept
+the HTTP request.  \r\n signifies a carriage return & line feed
+
+-->
+	<DataModel name="HttpRequest" >
+		<String value="GET /WebResource.axd?d=" mutable="false" token="true"/>	
+		<String name="WebResource axd d query string value" value="FoQLHGDQUESo5X3fP1itgw2" />
+
+		<!-- We encode the & symbol in &t= so Peach can parse it properly-->
+		<String value="&#38;t=" mutable="false" token="true" />								
+		<String name="WebResource axd t query string value" value="634050968073162769" mutable="false" token="true" />
+
+		<String value=" HTTP/1.1" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="Host: " mutable="false" token="true"/>					
+		<String name="Host value" value="website.com" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="User-Agent: " mutable="false" token="true"/>					
+		<String name="User-Agent value" value="Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+		
+		<String value="Accept: " mutable="false" token="true"/>					
+		<String name="Accept value" value="*/*" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="Accept-Language: " mutable="false" token="true"/>					
+		<String name="Accept-Language value" value="en-US,en;q=0.5" mutable="false" token="true" />
+		<String value="\r\n" mutable="false" token="true"/>
+	
+		<String value="Accept-Encoding: " mutable="false" token="true"/>					
+		<String name="Accept-Encoding value" value="gzip, deflate" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="Referer: " mutable="false" token="true"/>					
+		<String name="Referer value" value="http://website.com" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="Cookie: " mutable="false" token="true"/>					
+		<String name="Cookie value" value="ASP.NET_SessionId=erygx0554bl2ek55fhef23zw" mutable="false" token="true"/>
+		<String value="\r\n" mutable="false" token="true"/>
+
+		<String value="Connection: " mutable="false" token="true"/>					
+		<String name="Connection value" value="keep-alive" mutable="false" token="true"/>
+		<String value="\r\n\r\n" mutable="false" token="true"/>
+	</DataModel>
+
+
+	<DataModel name="HttpResponse">
+		<!-- the webserver's reply, we don't care what it is -->
+		<Blob name="WhoCares" valueType="hex" />
+	</DataModel>
+
+	
+	<StateModel name="TheStateModel" initialState="TheState">
+		<State name="TheState">
+			<Action type="output">
+				<DataModel ref="HttpRequest" />
+			</Action>
+			
+			<Action type="input">
+				<DataModel ref="HttpResponse" />
+			</Action>
+		</State>
+	</StateModel>
+
+
+        <Agent name="WinAgent">
+	     <!-- If we have a crash, put a packet capture in the logs -->
+
+	     <Monitor name="Network" class="Pcap">
+		<Param name="Device" value="Local Area Connection" />
+		<Param name="filter" value="tcp"/>
+	     </Monitor>    					    	
+        </Agent>
+
+	
+	<Test name="Default">
+		<Agent ref="WinAgent" />
+		<StateModel ref="TheStateModel"/>
+
+		<!-- the webserver & port to which we connect -->
+		<!-- We use the TcpClient publisher for more fine-grained control over the HTTP request -->		
+		
+		<Publisher class="TcpClient">
+			<Param name="Host" value="192.168.11.44" />
+			<Param name="Port" value="80" />
+		</Publisher>
+		
+		<!-- create a logs directory; will be in the same directory where we run peach -->
+		
+		<Logger class="Filesystem">
+			<Param name="Path" value="logs" />
+		</Logger>
+
+		<!-- we run a finite number of test cases -->
+
+		<Strategy class="Sequential"/>	
+	</Test>
+
+</Peach>
